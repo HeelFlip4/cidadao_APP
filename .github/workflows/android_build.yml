@@ -37,11 +37,13 @@ jobs:
         run: flutter pub get
 
       # 4. Compilação do APK
-      - name: Compilar APK (Release)
-        run: flutter build apk --release
+      # CORREÇÃO: Usamos --no-codesign para que o build Release funcione no CI/CD 
+      # sem ter acesso à chave de assinatura. O APK será instalável (sideload).
+      - name: Compilar APK (Release, sem assinatura)
+        run: flutter build apk --release --no-codesign
 
       # 5. Salva o APK como um Artefato
-      # O APK de release fica no caminho build/app/outputs/apk/release/app-release.apk
+      # O APK de release fica no caminho build/app/outputs/flutter/apk/app-release.apk
       - name: Upload APK para Download
         uses: actions/upload-artifact@v4
         with:
