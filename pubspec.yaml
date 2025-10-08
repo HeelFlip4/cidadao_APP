@@ -1,0 +1,72 @@
+name: cidadao_app
+description: "Aplicativo Cidadão para Prefeituras - Sistema de Ocorrências e Serviços"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  
+  # Navegação
+  go_router: ^16.2.4
+  
+  # Estado e gerenciamento
+  provider: ^6.1.2
+  
+  # HTTP e API
+  http: ^1.2.2
+  dio: ^5.7.0
+  
+  # Localização
+  geolocator: ^14.0.2
+  permission_handler: ^12.0.1
+  
+  # Imagens e mídia
+  image_picker: ^1.1.2
+  cached_network_image: ^3.4.1
+  
+  # Notificações
+  firebase_core: 2.24.0
+  firebase_auth: 4.15.0
+  cloud_firestore: 4.13.0
+  firebase_messaging: 14.7.6
+  flutter_local_notifications: ^19.4.2
+  timezone: ^0.10.1
+
+  
+  # UI e animações
+  lottie: ^3.1.2
+  shimmer: ^3.0.0
+  carousel_slider: ^5.0.0
+  
+  # Utilitários
+  shared_preferences: ^2.3.2
+  url_launcher: ^6.3.1
+  intl: ^0.20.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/animations/
+    - assets/icons/
+  
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 500
