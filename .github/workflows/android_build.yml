@@ -1,0 +1,51 @@
+# Nome do workflow que aparecerá no GitHub Actions
+name: Build APK para Apresentação (Release)
+
+# Quando este workflow deve rodar:
+on:
+  push:
+    # Roda sempre que houver um push para a branch principal
+    branches: [ main, master ]
+  pull_request:
+    # Roda sempre que houver um Pull Request para a branch principal
+    branches: [ main, master ]
+  # Permite rodar o workflow manualmente pela interface do GitHub
+  workflow_dispatch:
+
+# Definição dos jobs (tarefas)
+jobs:
+  build_android:
+    # O ambiente que será usado para o build (máquina virtual Ubuntu)
+    runs-on: ubuntu-latest
+    
+    # Define as etapas do job
+    steps:
+      # 1. Checkout do Código
+      - name: Checkout Código do Repositório
+        uses: actions/checkout@v4
+
+      # 2. Configura o Ambiente Flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          # Define a versão do Flutter que será usada
+          flutter-version: '3.x' # Use a versão estável mais recente
+          channel: 'stable'
+          
+      # 3. Baixa as dependências do projeto (flutter pub get)
+      - name: Baixar Dependências do Flutter
+        run: flutter pub get
+
+      # 4. Compilação do APK
+      - name: Compilar APK (Release)
+        run: flutter build apk --release
+
+      # 5. Salva o APK como um Artefato
+      # O APK de release fica no caminho build/app/outputs/apk/release/app-release.apk
+      - name: Upload APK para Download
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: build/app/outputs/flutter/apk/app-release.apk
+          # Define por quanto tempo o APK ficará disponível para download (em dias)
+          retention-days: 5
