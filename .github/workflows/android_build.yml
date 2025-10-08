@@ -1,5 +1,5 @@
 # Nome do workflow que aparecerá no GitHub Actions
-name: Build APK para Apresentação (Release)
+name: Build APK para Apresentação (Debug)
 
 # Quando este workflow deve rodar:
 on:
@@ -37,17 +37,17 @@ jobs:
         run: flutter pub get
 
       # 4. Compilação do APK
-      # CORREÇÃO: Usamos --no-codesign para que o build Release funcione no CI/CD 
-      # sem ter acesso à chave de assinatura. O APK será instalável (sideload).
-      - name: Compilar APK (Release, sem assinatura)
-        run: flutter build apk --release --no-codesign
+      # CORREÇÃO: Usamos --debug. Este APK é assinado com uma chave debug e é instalável.
+      - name: Compilar APK (Debug, para Sideload)
+        run: flutter build apk --debug
 
       # 5. Salva o APK como um Artefato
-      # O APK de release fica no caminho build/app/outputs/flutter/apk/app-release.apk
+      # O caminho foi ajustado de 'app-release.apk' para 'app-debug.apk'
       - name: Upload APK para Download
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-apk
-          path: build/app/outputs/flutter/apk/app-release.apk
+          name: app-debug-apk
+          # O APK de debug fica no caminho build/app/outputs/flutter/apk/app-debug.apk
+          path: build/app/outputs/flutter/apk/app-debug.apk
           # Define por quanto tempo o APK ficará disponível para download (em dias)
           retention-days: 5
